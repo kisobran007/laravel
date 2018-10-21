@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 <div class="row">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-4 offset-4">
         <h1>Sign Up</h1>
         @if($errors->any())
             <div class="alert alert-danger">

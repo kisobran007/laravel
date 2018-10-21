@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests;
 use Validator;
+use Auth;
 
 class UserController extends Controller
 {
@@ -27,5 +28,27 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('products.index');
+    }
+    public function getSignin(){
+        return view('user.signin');
+    }
+    public function postSignin(Request $request){
+        $rules = [
+            'email' => 'email|required',
+            'password' => 'required|min:4'
+        ];
+
+        $this->validate($request, $rules);
+
+
+        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
+        {
+            return redirect()->route('getprofile');
+        }
+        return redirect()->back();
+
+    }
+    public function getProfile(){
+        return view('user.profile');
     }
 }
