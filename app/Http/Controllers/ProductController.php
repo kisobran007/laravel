@@ -43,6 +43,7 @@ class ProductController extends Controller
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
         $total = $cart->totalPrice;
+
         return view('shop.checkout')->with('total', $total);
     }
     public function postCheckout(){

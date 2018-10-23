@@ -13,7 +13,7 @@
         <form action="{{route('postsignup')}}" method="POST">
             <div class="form-group">
               <label for="email"></label>
-              <input class="form-control" type="text" id="email" name="email">
+              <input class="form-control" type="text" id="email" name="email" value="{{old('email')}}">
               <small id="helpId" class="text-muted">Input your email</small>
             </div>
             <div class="form-group">

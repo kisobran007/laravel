@@ -21,10 +21,16 @@
                 <i class="fas fa-user"></i> User management
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{route('getsignup')}}">Signup</a>
-            <a class="dropdown-item" href="{{route('getsignin')}}">Signin</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Log out</a>
+              @if (Auth::check())
+                <a class="dropdown-item" href="{{route('getprofile')}}">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{route('getlogout')}}">Log out</a>
+              @else
+                <a class="dropdown-item" href="{{route('getsignup')}}">Signup</a>
+                <a class="dropdown-item" href="{{route('getsignin')}}">Signin</a>
+              @endif
+
+
           </div>
         </li>
       </ul>
