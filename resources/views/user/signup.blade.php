@@ -6,7 +6,7 @@
         @if($errors->any())
             <div class="alert alert-danger">
                 @foreach ($errors->all() as $error)
-                <p>{{@error}}</p>
+                <p>{!! $errors->first() !!}</p>
                 @endforeach
             </div>
         @endif
@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label for="password"></label>
-                <input class="form-control" type="text" id="password" name="password">
+                <input class="form-control" type="password" id="password" name="password">
                 <small id="helpId" class="text-muted">Input your password</small>
               </div>
               <button type="submit" class="btn btn-primary">Sign Up</button>

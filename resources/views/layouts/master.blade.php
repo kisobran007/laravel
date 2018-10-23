@@ -15,6 +15,7 @@
     <div class="container">
     @yield('content')
     </div>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
     @yield('scripts')
 </body>

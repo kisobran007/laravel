@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Http\Requests;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class UserController extends Controller
@@ -35,17 +34,18 @@ class UserController extends Controller
     public function postSignin(Request $request){
         $rules = [
             'email' => 'email|required',
-            'password' => 'required|min:4'
+            'password' => 'required|min:4',
+            'g-recaptcha-response' => 'required|captcha',
         ];
 
         $this->validate($request, $rules);
-
 
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
         {
             return redirect()->route('getprofile');
         }
-        return redirect()->back();
+        Session::flash('error', $validator->messages()->first());
+        return redirect()->back()->withInput();
 
     }
     public function getProfile(){
