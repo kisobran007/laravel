@@ -63,7 +63,7 @@ class ProductController extends Controller
                 "description" => "Test Charge"
             ));
         } catch (\Exception $e) {
-            return redirect()->route('checkout')->with('error', $e->getMessage());
+            return redirect()->route('getcheckout')->with('getcheckout', $e->getMessage());
         }
          Session::forget('cart');
         return redirect()->route('products.index')->with('success', 'Successfully purchased products!');
