@@ -43,7 +43,7 @@ Laravel Shopping Cart
         <hr>
         <div class="row">
             <div class="col-sm-6 col-md-6 offset-3 offset-3">
-                <a href="{{route('getcheckout')}}" type="button" class="btn btn-success">Checkout</a>
+                <a href="{{ route('postcheckout') }}" type="button" class="btn btn-success">Checkout</a>
             </div>
         </div>
     @else
