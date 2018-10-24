@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Session;
 
 class UserController extends Controller
 {
@@ -28,6 +29,12 @@ class UserController extends Controller
 
         Auth::login($user);
 
+        if(Session::has('oldURL')){
+            $oldURL = Session::get('oldURL');
+            return redirect()->to($oldURL);
+            Session::forget('oldURL');
+
+        }
 
         return redirect()->route('getprofile');
     }
@@ -45,6 +52,12 @@ class UserController extends Controller
 
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
         {
+            if(Session::has('oldURL')){
+                $oldURL = Session::get('oldURL');
+                return redirect()->to($oldURL);
+                Session::forget('oldURL');
+
+            }
             return redirect()->route('getprofile');
         }
         Session::flash('error', $validator->messages()->first());
@@ -58,6 +71,6 @@ class UserController extends Controller
     public function logOut(){
 
         Auth::logout();
-        return redirect()->back();
+        return redirect()->route('getsignin');
     }
 }

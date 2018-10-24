@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use Session;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
@@ -14,6 +15,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        Session::put('oldURL', $request->url());
         return route('getsignin');
     }
 }
