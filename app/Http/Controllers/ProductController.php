@@ -10,6 +10,7 @@ use Session;
 use Auth;
 use Stripe\Charge;
 use Stripe\Stripe;
+use Omnipay\Omnipay;
 
 class ProductController extends Controller
 {
@@ -97,11 +98,63 @@ class ProductController extends Controller
             $order->address = $request->input('address');
             $order->name = $request->input('name');
             $order->payment_id = $charge->id;
+            $order->payment_type = 'Stripe';
             Auth::user()->orders()->save($order);
         } catch (\Exception $e) {
-            return redirect()->route('getcheckout')->with('getcheckout', $e->getMessage());
+            return redirect()->route('getcheckout')->with('error', $e->getMessage());
         }
          Session::forget('cart');
         return redirect()->route('products.index')->with('success', 'Successfully purchased products!');
+    }
+
+    public function postPaypalCheckout(Request $request){
+        if (!Session::has('cart')) {
+            return redirect()->route('shop.shoppingCart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+
+        $paypal = Omnipay::create( 'PayPal_Express' );
+        $paypal->setTestMode( true );
+        // Using Paypal Sandbox API Credentials
+        $paypal->setUsername('merchantaccount123_api1.test.com');
+        $paypal->setPassword('DFL4QRQEE2W5ECPU');
+        $paypal->setSignature('AC3D3bQpk5l4618mV9bpg.vLjM0YAp8.601TMiA8M.hEKnMa.m2ZdXe4');
+
+        $order_params = [
+            'cancelUrl' => route('paypalcancel'),
+            'returnUrl' => route('paypalsuccess'),
+            "currency" => "usd",
+            'description' => 'Test Paypal Charge',
+            'amount' => $cart->totalPrice,
+        ];
+
+        $response = $paypal->purchase( $order_params )->send();
+
+        if ( $response->isRedirect()){
+            return $response->redirect();
+        } else {
+            return redirect()->route('getcheckout')->with('error', 'We cannot process your payment right now, so please try again later. We are sorry for the inconvenience.');
+        }
+    }
+
+    public function getPaypalSuccess(){
+        if (!Session::has('cart')) {
+            return redirect()->route('shop.shoppingCart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+
+        $order = new Order();
+        $order->cart = serialize($cart);
+        $order->payment_type = 'Paypal';
+        Auth::user()->orders()->save($order);
+
+        Session::forget('cart');
+        return redirect()->route('products.index')->with('success', 'Successfully purchased products!');
+    }
+
+    public function getPaypalCancel(){
+        return redirect()->route('getcheckout')->with('error', 'We cannot process your payment right now, so please try again later. We are sorry for the inconvenience.');
     }
 }

@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/', 'ProductController@getIndex')->name('products.index');
 Route::get('/add-to-cart/{id}', 'ProductController@getAddToCart')->name('product.addToCart');
 Route::get('/reduce-by-one/{id}', 'ProductController@getReduceByOne')->name('product.reduceByOne');
@@ -31,5 +33,8 @@ Route::group(['prefix' => 'user'], function() {
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/checkout', 'ProductController@getCheckout')->name('getcheckout');
     Route::post('/checkout', 'ProductController@postCheckout')->name('postcheckout');
+    Route::post('/paypal-checkout', 'ProductController@postPaypalCheckout')->name('postpaypalcheckout');
+    Route::get('/paypal-succes', 'ProductController@getPaypalSuccess')->name('paypalsuccess');
+    Route::get('/paypal-cancel', 'ProductController@getPaypalCancel')->name('paypalcancel');
 });
 

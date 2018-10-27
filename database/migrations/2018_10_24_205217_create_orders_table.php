@@ -18,9 +18,10 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->integer('user_id');
             $table->text('cart');
-            $table->text('address');
-            $table->string('name');
-            $table->string('payment_id');
+            $table->string('payment_type')->nullable()->default(null);
+            $table->text('address')->nullable()->default(null);
+            $table->string('name')->nullable()->default(null);
+            $table->string('payment_id')->nullable()->default(null);
         });
     }
 
