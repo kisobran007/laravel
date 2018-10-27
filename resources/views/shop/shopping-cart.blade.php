@@ -22,10 +22,10 @@ Laravel Shopping Cart
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="">Reduce by one</a>
+                                        <a href="{{ route('product.reduceByOne', ['id' => $product['item']['id']]) }}">Reduce by one</a>
                                     </li>
                                     <li>
-                                            <a href="">Remove All</a>
+                                            <a href="{{ route('product.removeItem', ['id' => $product['item']['id']]) }}">Remove All</a>
                                     </li>
                                 </ul>
                             </div>

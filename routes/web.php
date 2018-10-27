@@ -12,6 +12,8 @@
 */
 Route::get('/', 'ProductController@getIndex')->name('products.index');
 Route::get('/add-to-cart/{id}', 'ProductController@getAddToCart')->name('product.addToCart');
+Route::get('/reduce-by-one/{id}', 'ProductController@getReduceByOne')->name('product.reduceByOne');
+Route::get('/remove/{id}', 'ProductController@getRemoveItem')->name('product.removeItem');
 Route::get('/shopping-cart', 'ProductController@getCart')->name('product.shoppingCart');
 
 Route::group(['prefix' => 'user'], function() {
