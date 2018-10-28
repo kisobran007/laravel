@@ -24,6 +24,7 @@ class UserController extends Controller
         $user = new User([
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
+            'type' => User::DEFAULT_TYPE,
         ]);
         $user->save();
 
@@ -60,7 +61,6 @@ class UserController extends Controller
             }
             return redirect()->route('getprofile');
         }
-        Session::flash('error', $validator->messages()->first());
         return redirect()->back()->withInput();
 
     }

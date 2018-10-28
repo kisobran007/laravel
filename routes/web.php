@@ -37,4 +37,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/paypal-succes', 'ProductController@getPaypalSuccess')->name('paypalsuccess');
     Route::get('/paypal-cancel', 'ProductController@getPaypalCancel')->name('paypalcancel');
 });
+Route::group(['prefix' => 'admin'], function() {
+    Route::group(['middleware' => 'is_admin'], function() {
+        Route::get('/dashboard', 'AdminController@index')->name('admin.index');
+    });
+});
 
