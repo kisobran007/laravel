@@ -13,6 +13,7 @@
 
 
 Route::get('/', 'ProductController@getIndex')->name('products.index');
+Route::get('/index2', 'ProductController@getIndex2')->name('products.index2');
 Route::get('/add-to-cart/{id}', 'ProductController@getAddToCart')->name('product.addToCart');
 Route::get('/reduce-by-one/{id}', 'ProductController@getReduceByOne')->name('product.reduceByOne');
 Route::get('/remove/{id}', 'ProductController@getRemoveItem')->name('product.removeItem');
