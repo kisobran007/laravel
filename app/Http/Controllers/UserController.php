@@ -24,7 +24,6 @@ class UserController extends Controller
         $user = new User([
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
-            'type' => User::DEFAULT_TYPE,
         ]);
         $user->save();
 

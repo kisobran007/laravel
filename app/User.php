@@ -15,8 +15,6 @@ class User extends Authenticatable
      *
      * @var array
      */
-    const ADMIN_TYPE = 'admin';
-    const DEFAULT_TYPE = 'default';
 
     protected $fillable = [
         'email', 'password',
@@ -33,9 +31,5 @@ class User extends Authenticatable
 
     public function orders(){
         return $this->hasMany('App\Order');
-    }
-
-    public function isAdmin()    {
-        return $this->type === self::ADMIN_TYPE;
     }
 }
