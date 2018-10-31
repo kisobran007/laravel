@@ -39,3 +39,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/paypal-cancel', 'ProductController@getPaypalCancel')->name('paypalcancel');
 });
 
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
